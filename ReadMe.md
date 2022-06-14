@@ -1,5 +1,10 @@
 # Simulation files of Continuous Integral Sliding Mode Observer
 
+**Author:** Zengjie Zhang
+**Afflication:** The University of British Columbia
+
+[![DOI](https://zenodo.org/badge/503450990.svg)](https://zenodo.org/badge/latestdoi/503450990)
+
 ## Quick Start
 
 Run the main.m script to generate figures
