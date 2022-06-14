@@ -27,38 +27,107 @@ d_tri = disturbance_trg(t_scale, disturbance_gain);
 [~, ~, ~, ~, ~, ~, d_sqrt_est_ismo, ~, ~, ~] = sim_manipulator(Ts, Tn, d_sqrt, x_des);
 
 
-% Figure 1
+%% Figure 1
 
-draw_figure(t_scale, x1, [0,10,0,2], '{\boldmath{$x$}}$_1(t)$');
-draw_figure(t_scale, x2, [0,10,-1.5,1.5], '{\boldmath{$x$}}$_2(t)$');
-draw_figure(t_scale, u, [0,10,-2,3], '{\boldmath{$u$}}$(t)$');
-draw_figure(t_scale, d_sin, [0,10,0,0.2], '{\boldmath{$d$}}$(t)$');
+h1 = figure();
 
+h11 = subplot(1, 4, 1);
+draw_figure(t_scale, x1, [0,10,0,2], '\textbf{(a) joint position} {\boldmath{$x$}}$_1(t)$');
+h12 = subplot(1, 4, 2);
+draw_figure(t_scale, x2, [0,10,-1.5,1.5], '\textbf{(b) joint velocity} {\boldmath{$x$}}$_2(t)$');
+h13 = subplot(1, 4, 3);
+draw_figure(t_scale, u, [0,10,-2,3], '\textbf{(c) control input} {\boldmath{$u$}}$(t)$');
+h14 = subplot(1, 4, 4);
+draw_figure(t_scale, d_sin, [0,10,0,0.2], '\textbf{(d) disturbance} {\boldmath{$d$}}$(t)$');
 
-% Figure 2
-draw_figure(t_scale, s_ismo, [0,10,-1,0.4], '{\boldmath{$s$}}$(t)$');
-draw_figure(t_scale, x1_est_ismo, [0,10,0,2], '{\boldmath{$\hat{x}$}}$_1(t)$');
-draw_figure(t_scale, x2_est_ismo, [0,10,-1.5,1.5], '{\boldmath{$\hat{x}$}}$_2(t)$');
-draw_figure(t_scale, d_sin_est_ismo, [0,10,0,0.2], '{\boldmath{$\hat{d}$}}$(t)$');
-draw_figure(t_scale, x1-x1_est_ismo, [0,10,-8e-11,8e-11+1e-16], '{\boldmath{$\tilde{x}$}}$_1(t)$');
-draw_figure(t_scale, x2-x2_est_ismo, [0,10,-8e-3,8e-3], '{\boldmath{$\tilde{x}$}}$_2(t)$');
-draw_figure(t_scale, d_sin-d_sin_est_ismo, [0,10,-5e-3,5e-3], '{\boldmath{$\tilde{d}$}}$(t)$');
-
-
-% Figure 3
-draw_figure(t_scale, s_smo, [0,10,-1,0.4], '{\boldmath{$s''$}}$\!(t)$');
-draw_figure(t_scale, x1_est_smo, [0,10,0,2], '{\boldmath{$\hat{x}''$}}$\!_1(t)$')
-draw_figure(t_scale, x2_est_smo, [0,10,-1.5,1.5], '{\boldmath{$\hat{x}''$}}$\!_2(t)$')
-draw_figure(t_scale, d_sin_est_smo, [0,10,0,0.2], '{\boldmath{$\hat{d}''$}}$\!(t)$')
-draw_figure(t_scale, x1-x1_est_smo, [0,10,-4e-3,4e-3], '{\boldmath{$\tilde{x}''$}}$\!_1(t)$')
-draw_figure(t_scale, x2-x2_est_smo, [0,10,-8e-3,8e-3], '{\boldmath{$\tilde{x}''$}}$\!_2(t)$')
-draw_figure(t_scale, d_sin-d_sin_est_smo, [0,10,-0.015,0.015], '{\boldmath{$\tilde{d}''$}}$\!(t)$')
+OutPos1 = get(h1, 'OuterPosition');
+set(h1, 'OuterPosition', [200,200,1400,OutPos1(4)]);
+set(h11, 'OuterPosition', [0, 0, 0.25, 1]);
+set(h12, 'OuterPosition', [0.25, 0, 0.25, 1]);
+set(h13, 'OuterPosition', [0.5, 0, 0.25, 1]);
+set(h14, 'OuterPosition', [0.75, 0, 0.25, 1]);
 
 
-% Figure 4
-draw_figure(t_scale, d_tri, [0,10,0,0.2], '{\boldmath{$d$}}$_{\mathrm{trg}}(t)$')
-draw_figure(t_scale, d_tri_est_ismo, [0,10,0,0.2], '{\boldmath{$\hat{d}$}}$_{\mathrm{trg}}(t)$')
-draw_figure(t_scale, d_tri-d_tri_est_ismo, [0,10,-4e-3,4e-3], '{\boldmath{$\tilde{d}$}}$_{\mathrm{trg}}(t)$')
-draw_figure(t_scale, d_sqrt, [0,10,0,0.2], '{\boldmath{$d$}}$_{\mathrm{sqr}}(t)$')
-draw_figure(t_scale, d_sqrt_est_ismo, [0,10,0,0.2], '{\boldmath{$\hat{d}$}}$_{\mathrm{sqrt}}(t)$')
-draw_figure(t_scale, d_sqrt-d_sqrt_est_ismo, [0,10,-0.2,0.2], '{\boldmath{$\tilde{d}$}}$_{\mathrm{sqrt}}(t)$')
+%% Figure 2
+
+h2 = figure();
+
+h21 = subplot(2, 4, 1);
+draw_figure(t_scale, s_ismo, [0,10,-1,0.4], '\textbf{(a) ISMO sliding mode} {\boldmath{$s$}}$(t)$');
+h22 = subplot(2, 4, 2);
+draw_figure(t_scale, x1_est_ismo, [0,10,0,2], '\textbf{(b) ISMO estimation} {\boldmath{$\hat{x}$}}$_1(t)$');
+h23 = subplot(2, 4, 3);
+draw_figure(t_scale, x2_est_ismo, [0,10,-1.5,1.5], '\textbf{(c) ISMO estimation} {\boldmath{$\hat{x}$}}$_2(t)$');
+h24 = subplot(2, 4, 4);
+draw_figure(t_scale, d_sin_est_ismo, [0,10,0,0.2], '\textbf{(d) ISMO estimation} {\boldmath{$\hat{d}$}}$(t)$');
+h25 = subplot(2, 4, 5.5);
+draw_figure(t_scale, x1-x1_est_ismo, [0,10,-8e-11,8e-11+1e-16], '\textbf{(e) ISMO estimation error} {\boldmath{$\tilde{x}$}}$_1(t)$');
+h26 = subplot(2, 4, 6.5);
+draw_figure(t_scale, x2-x2_est_ismo, [0,10,-8e-3,8e-3], '\textbf{(f) ISMO estimation error} {\boldmath{$\tilde{x}$}}$_2(t)$');
+h27 = subplot(2, 4, 7.5);
+draw_figure(t_scale, d_sin-d_sin_est_ismo, [0,10,-5e-3,5e-3], '\textbf{(g) ISMO estimation error} {\boldmath{$\tilde{d}$}}$(t)$');
+
+OutPos2 = get(h2, 'OuterPosition');
+set(h2, 'OuterPosition', [200,200,1400,OutPos2(4)*2]);
+set(h21, 'OuterPosition', [0, 0.5, 0.25, 0.5]);
+set(h22, 'OuterPosition', [0.25, 0.5, 0.25, 0.5]);
+set(h23, 'OuterPosition', [0.5, 0.5, 0.25, 0.5]);
+set(h24, 'OuterPosition', [0.75, 0.5, 0.25, 0.5]);
+set(h25, 'OuterPosition', [0.125, 0, 0.25, 0.5]);
+set(h26, 'OuterPosition', [0.375, 0, 0.25, 0.5]);
+set(h27, 'OuterPosition', [0.625, 0, 0.25, 0.5]);
+
+
+%% Figure 3
+
+h3 = figure();
+h31 = subplot(2, 4, 1);
+draw_figure(t_scale, s_smo, [0,10,-1,0.4], '\textbf{(a) SMO sliding mode} {\boldmath{$s''$}}$\!(t)$');
+h32 = subplot(2, 4, 2);
+draw_figure(t_scale, x1_est_smo, [0,10,0,2], '\textbf{(b) SMO estimation} {\boldmath{$\hat{x}''$}}$\!_1(t)$')
+h33 = subplot(2, 4, 3);
+draw_figure(t_scale, x2_est_smo, [0,10,-1.5,1.5], '\textbf{(c) SMO estimation} {\boldmath{$\hat{x}''$}}$\!_2(t)$')
+h34 = subplot(2, 4, 4);
+draw_figure(t_scale, d_sin_est_smo, [0,10,0,0.2], '\textbf{(d) SMO estimation} {\boldmath{$\hat{d}''$}}$\!(t)$')
+h35 = subplot(2, 4, 5.5);
+draw_figure(t_scale, x1-x1_est_smo, [0,10,-4e-3,4e-3], '\textbf{(e) SMO estimation error} {\boldmath{$\tilde{x}''$}}$\!_1(t)$')
+h36 = subplot(2, 4, 6.5);
+draw_figure(t_scale, x2-x2_est_smo, [0,10,-8e-3,8e-3], '\textbf{(f) SMO estimation error} {\boldmath{$\tilde{x}''$}}$\!_2(t)$')
+h37 = subplot(2, 4, 7.5);
+draw_figure(t_scale, d_sin-d_sin_est_smo, [0,10,-0.015,0.015], '\textbf{(g) SMO estimation error} {\boldmath{$\tilde{d}''$}}$\!(t)$')
+
+OutPos3 = get(h3, 'OuterPosition');
+set(h3, 'OuterPosition', [200,200,1400,OutPos3(4)*2]);
+set(h31, 'OuterPosition', [0, 0.5, 0.25, 0.5]);
+set(h32, 'OuterPosition', [0.25, 0.5, 0.25, 0.5]);
+set(h33, 'OuterPosition', [0.5, 0.5, 0.25, 0.5]);
+set(h34, 'OuterPosition', [0.75, 0.5, 0.25, 0.5]);
+set(h35, 'OuterPosition', [0.125, 0, 0.25, 0.5]);
+set(h36, 'OuterPosition', [0.375, 0, 0.25, 0.5]);
+set(h37, 'OuterPosition', [0.625, 0, 0.25, 0.5]);
+
+
+%% Figure 4
+
+h4 = figure();
+h41 = subplot(2, 3, 1);
+draw_figure(t_scale, d_tri, [0,10,0,0.2], '\textbf{(a) triangle disturbance} {\boldmath{$d$}}$_{\mathrm{trg}}(t)$')
+h42 = subplot(2, 3, 2);
+draw_figure(t_scale, d_tri_est_ismo, [0,10,0,0.2], '{\textbf{(b) estimation} \boldmath{$\hat{d}$}}$_{\mathrm{trg}}(t)$')
+h43 = subplot(2, 3, 3);
+draw_figure(t_scale, d_tri-d_tri_est_ismo, [0,10,-4e-3,4e-3], '{\textbf{(c) estimation error} \boldmath{$\tilde{d}$}}$_{\mathrm{trg}}(t)$')
+h44 = subplot(2, 3, 4);
+draw_figure(t_scale, d_sqrt, [0,10,0,0.2], '{\textbf{(d) square disturbance} \boldmath{$d$}}$_{\mathrm{sqr}}(t)$')
+h45 = subplot(2, 3, 5);
+draw_figure(t_scale, d_sqrt_est_ismo, [0,10,0,0.2], '{\textbf{(e) estimation} \boldmath{$\hat{d}$}}$_{\mathrm{sqrt}}(t)$')
+h46 = subplot(2, 3, 6);
+draw_figure(t_scale, d_sqrt-d_sqrt_est_ismo, [0,10,-0.2,0.2], '{\textbf{(f) estimation error} \boldmath{$\tilde{d}$}}$_{\mathrm{sqrt}}(t)$')
+
+OutPos4 = get(h4, 'OuterPosition');
+set(h4, 'OuterPosition', [200,200,1200,OutPos3(4)*2]);
+set(h41, 'OuterPosition', [0, 0.5, 0.33, 0.5]);
+set(h42, 'OuterPosition', [0.33, 0.5, 0.33, 0.5]);
+set(h43, 'OuterPosition', [0.67, 0.5, 0.33, 0.5]);
+set(h44, 'OuterPosition', [0, 0, 0.33, 0.5]);
+set(h45, 'OuterPosition', [0.33, 0, 0.33, 0.5]);
+set(h46, 'OuterPosition', [0.67, 0, 0.33, 0.5]);
